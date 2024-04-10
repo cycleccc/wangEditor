@@ -58,6 +58,7 @@ function renderTable(elemNode: SlateElement, children: VNode[] | null, editor: I
     <div
       className="table-container"
       data-selected={selected}
+      contentEditable={false}
       on={{
         mousedown: (e: MouseEvent) => {
           // @ts-ignore 阻止光标定位到 table 后面
