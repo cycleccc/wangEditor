@@ -7,6 +7,7 @@ import { Editor, Range, Node, Transforms } from 'slate'
 import { IDomEditor } from '../../editor/interface'
 import TextArea from '../TextArea'
 import { hasEditableTarget } from '../helpers'
+import { DomEditor } from '../../editor/dom-editor'
 
 function handleOnCut(e: Event, textarea: TextArea, editor: IDomEditor) {
   const event = e as ClipboardEvent
@@ -14,6 +15,15 @@ function handleOnCut(e: Event, textarea: TextArea, editor: IDomEditor) {
   const { readOnly } = editor.getConfig()
 
   if (readOnly) return
+  if (selection) {
+    const path = [selection.anchor.path[0]]
+    const [firstNode] = Editor.node(editor, path)
+    if (firstNode && DomEditor.getNodeType(firstNode) === 'table') {
+      Editor.deleteFragment(editor)
+      Transforms.removeNodes(editor, { at: [0], mode: 'highest' })
+    }
+  }
+
   if (!hasEditableTarget(editor, event.target)) return
 
   event.preventDefault()
