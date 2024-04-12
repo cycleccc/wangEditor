@@ -8,6 +8,7 @@ import { IDomEditor } from '../../editor/interface'
 import TextArea from '../TextArea'
 import { hasEditableTarget } from '../helpers'
 import { DomEditor } from '../../editor/dom-editor'
+import isEqual from 'lodash/isEqual'
 
 function handleOnCut(e: Event, textarea: TextArea, editor: IDomEditor) {
   const event = e as ClipboardEvent
@@ -16,9 +17,15 @@ function handleOnCut(e: Event, textarea: TextArea, editor: IDomEditor) {
 
   if (readOnly) return
   if (selection) {
-    const path = [selection.anchor.path[0]]
-    const [firstNode] = Editor.node(editor, path)
-    if (firstNode && DomEditor.getNodeType(firstNode) === 'table') {
+    const path = selection.anchor.path
+    const target = [0, 0, 0, 0]
+    const [firstNode] = Editor.node(editor, [path[0]])
+    if (firstNode && DomEditor.getNodeType(firstNode) === 'table' && isEqual(path, target)) {
+      event.preventDefault()
+      const data = event.clipboardData
+      if (data == null) return
+      editor.setFragmentData(data)
+
       Editor.deleteFragment(editor)
       Transforms.removeNodes(editor, { at: [0], mode: 'highest' })
     }
