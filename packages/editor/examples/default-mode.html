@@ -46,6 +46,7 @@
     // editorConfig.readOnly = true
     // editorConfig.scroll = false
     editorConfig.placeholder = '请输入内容'
+            editorConfig.maxLength = 30
     editorConfig.MENU_CONF['uploadImage'] = {
       fieldName: 'your-fileName',
       base64LimitSize: 10 * 1024 * 1024 // 10M 以下插入 base64
@@ -94,14 +95,14 @@
     const toolbarConfig = {
       // excludeKeys: ['uploadVideo'],
     }
-
+      const content = [{ "type": "paragraph", "children": [{ "text": "卡萨丁巨化股份上课大概吧" }] }, { "type": "paragraph", "children": [{ "text": "卡萨丁巨化股份上课大概吧" }] }]
     // create
     let editor, toolbar
     document.getElementById('btn-create').addEventListener('click', () => {
       editor = E.createEditor({
         selector: '#editor-text-area',
         // selector: document.getElementById('editor-text-area'),
-        content: window.content1,
+        content,
         config: editorConfig
       })
 
