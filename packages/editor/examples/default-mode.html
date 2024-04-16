@@ -48,24 +48,24 @@
   <script>
     const E = window.wangEditor
 
-                const editorConfig = {
-                  MENU_CONF: {
-                    ['fontSize']: {
-                      fontSizeList: [
-                        // 元素支持两种形式
-                        //   1. 字符串；
-                        //   2. { name: 'xxx', value: 'xxx' }
+    const editorConfig = {
+      MENU_CONF: {
+        ['fontSize']: {
+          fontSizeList: [
+            // 元素支持两种形式
+            //   1. 字符串；
+            //   2. { name: 'xxx', value: 'xxx' }
 
-                        '12px',
-                        '16px',
-                        { name: '24px', value: '24px' },
-                        '40px',
-                      ]
-                    }
-                  }
-                }
+            '12px',
+            '16px',
+            { name: '24px', value: '24px' },
+            '40px',
+          ]
+        }
+      }
+    }
 
-                // editorConfig.autoFocus = false
+    // editorConfig.autoFocus = false
     // editorConfig.readOnly = true
     // editorConfig.scroll = false
     editorConfig.placeholder = '请输入内容'
@@ -118,18 +118,12 @@
     const toolbarConfig = {
       // excludeKeys: ['uploadVideo'],
     }
-            const jsonContent = [
-              {
-                type: "paragraph",
-                children: [{ text: "试试是不是黑体" }],
-                // fontSize: "48px",
-                fontFamily: "黑体",
-                lineheight: 3,
-              },
-            ]
+    const jsonContent = [
+      { type: 'list-item', children: [{ text: 'hello' }], level: 2 },
+    ]
     // create
-      let editor, toolbar
-                              // debugger
+    let editor, toolbar
+    // debugger
     document.getElementById('btn-create').addEventListener('click', () => {
       editor = E.createEditor({
         selector: '#editor-text-area',
