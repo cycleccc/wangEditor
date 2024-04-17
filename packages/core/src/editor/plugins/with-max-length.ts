@@ -69,24 +69,22 @@ export const withMaxLength = <T extends Editor>(editor: T) => {
       return
     }
 
-    // 只有一个 node 时，使用 insertFragment ，防止换行
-    if (fragment.length === 1) {
-      const node = fragment[0]
-      const leftLength = DomEditor.getLeftLengthOfMaxLength(e)
-      const text = Node.string(node)
-
-      if (leftLength < text.length) {
-        // 已经触发 maxLength ，不再插入
-        return
-      }
-
-      insertFragment(fragment)
-      return
-    }
     // 有 maxLength ，则分别插入 node
-    fragment.forEach(n => {
-      e.insertNode(n) //【注意】这里必须使用 `e.insertNode` ，而不是 insertNode
-    })
+    for (let i = 0; i < fragment.length; i++) {
+      const node = fragment[i]
+      // 第一个或只有一个  node 时，使用 insertFragment ，防止换行
+      if (i === 0) {
+        const leftLength = DomEditor.getLeftLengthOfMaxLength(e)
+        const text = Node.string(node)
+
+        if (leftLength < text.length) {
+          // 已经触发 maxLength ，不再插入
+          return
+        }
+
+        insertFragment([node])
+      } else e.insertNode(node) //【注意】这里必须使用 `e.insertNode` ，而不是 insertNode
+    }
   }
 
   e.dangerouslyInsertHtml = (html: string = '', isRecursive = false) => {
