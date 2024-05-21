@@ -116,18 +116,21 @@ async function insertBase64(editor: IDomEditor, file: File) {
 /**
  * 上传图片文件
  * @param editor editor
- * @param file file
+ * @param files files
  */
-async function uploadFile(editor: IDomEditor, file: File) {
+async function uploadFiles(editor: IDomEditor, files: File[]) {
   const uppy = getUppy(editor)
 
-  const { name, type, size } = file
-  uppy.addFile({
-    name,
-    type,
-    size,
-    data: file,
+  files.forEach(file => {
+    const { name, type, size } = file
+    uppy.addFile({
+      name,
+      type,
+      size,
+      data: file,
+    })
   })
+
   await uppy.upload()
 }
 
@@ -143,21 +146,35 @@ export default async function (editor: IDomEditor, files: FileList | null) {
   // 获取菜单配置
   const { customUpload, base64LimitSize } = getMenuConfig(editor)
 
-  // 按顺序上传
-  for await (const file of fileList) {
+  // 按顺序处理文件
+  const base64Files: File[] = []
+  const uploadFilesList: File[] = []
+
+  for (const file of fileList) {
     const size = file.size // size kb
     if (base64LimitSize && size <= base64LimitSize) {
       // 允许 base64 ，而且 size 在 base64 限制之内，则插入 base64 格式
-      await insertBase64(editor, file)
+      base64Files.push(file)
     } else {
-      // 上传
-      if (customUpload) {
-        // 自定义上传
+      uploadFilesList.push(file)
+    }
+  }
+
+  // 处理 base64 文件
+  for (const file of base64Files) {
+    await insertBase64(editor, file)
+  }
+
+  // 处理上传文件
+  if (uploadFilesList.length > 0) {
+    if (customUpload) {
+      // 自定义上传
+      for (const file of uploadFilesList) {
         await customUpload(file, (src, alt, href) => insertImageNode(editor, src, alt, href))
-      } else {
-        // 默认上传
-        await uploadFile(editor, file)
       }
+    } else {
+      // 默认上传
+      await uploadFiles(editor, uploadFilesList)
     }
   }
 }

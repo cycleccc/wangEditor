@@ -27,7 +27,7 @@
 
 
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="../dist/index.js"></script>
+  <script src="../dist/index.js?t=14"></script>
   <script>
     const E = window.wangEditor
 
@@ -51,7 +51,7 @@
 
       maxFileSize: 10 * 1024 * 1024, // 10M
 
-      base64LimitSize: 5 * 1024, // insert base64 format, if file's size less than 5kb
+      base64LimitSize: 1 * 1024, // insert base64 format, if file's size less than 5kb
 
       onBeforeUpload(file) {
         console.log('onBeforeUpload', file)
