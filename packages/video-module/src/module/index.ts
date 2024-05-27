@@ -16,7 +16,7 @@ const video: Partial<IModuleConf> = {
   elemsToHtml: [videoToHtmlConf],
   preParseHtml: [preParseHtmlConf],
   parseElemsHtml: [parseHtmlConf],
-  menus: [insertVideoMenuConf, uploadVideoMenuConf, editorVideSizeMenuConf],
+  menus: [insertVideoMenuConf, uploadVideoMenuConf, editorVideSizeMenuConf, editorVideSizeMenuConf],
   editorPlugin: withVideo,
 }
 

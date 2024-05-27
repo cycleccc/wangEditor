@@ -14,6 +14,7 @@ export default {
     videoPosterPlaceHolder: '封面图片 url',
     ok: '确定',
     editSize: '修改尺寸',
+    editPosition: '修改位置',
     width: '宽度',
     height: '高度',
   },
