@@ -8,6 +8,7 @@ import ee from 'event-emitter'
 import { IEditorConfig, AlertType, ISingleMenuConfig } from '../config/interface'
 import { IPositionStyle } from '../menus/interface'
 import { DOMElement } from '../utils/dom'
+import { SelectionMoveOptions } from 'slate/dist/interfaces/transforms/selection'
 
 export type ElementWithId = Element & { id: string }
 
@@ -61,7 +62,8 @@ export interface IDomEditor extends Editor {
   // selection 相关
   select: (at: Location) => void
   deselect: () => void
-  move: (distance: number, reverse?: boolean) => void
+  // move: (distance: number, reverse?: boolean) => void
+  move: (options?: SelectionMoveOptions) => void
   moveReverse: (distance: number) => void
   restoreSelection: () => void
   getSelectionPosition: () => Partial<IPositionStyle>

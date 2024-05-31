@@ -21,7 +21,8 @@ export const withSelection = <T extends Editor>(editor: T) => {
   e.deselect = () => {
     const { selection } = e
     const root = DomEditor.findDocumentOrShadowRoot(e)
-    const domSelection = root.getSelection()
+    // const domSelection = root.getSelection()
+    const domSelection = (root as Document).getSelection()
 
     if (domSelection && domSelection.rangeCount > 0) {
       domSelection.removeAllRanges()
@@ -32,22 +33,22 @@ export const withSelection = <T extends Editor>(editor: T) => {
     }
   }
 
-  // 移动光标
-  e.move = (distance: number, reverse = false) => {
-    if (!distance) return
-    if (distance < 0) return
+  // // 移动光标
+  // e.move = (distance: number, reverse = false) => {
+  //   if (!distance) return
+  //   if (distance < 0) return
 
-    Transforms.move(editor, {
-      distance,
-      unit: 'character',
-      reverse,
-    })
-  }
+  //   Transforms.move(editor, {
+  //     distance,
+  //     unit: 'character',
+  //     reverse,
+  //   })
+  // }
 
-  // 反向移动光标
-  e.moveReverse = (distance: number) => {
-    e.move(distance, true)
-  }
+  // // 反向移动光标
+  // e.moveReverse = (distance: number) => {
+  //   e.move(distance, true)
+  // }
 
   /**
    * 还原选区

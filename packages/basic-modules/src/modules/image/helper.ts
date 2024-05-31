@@ -7,6 +7,7 @@ import { Transforms, Range, Editor } from 'slate'
 import { IDomEditor, DomEditor } from '@wangeditor-next/core'
 import { ImageElement, ImageStyle } from './custom-types'
 import { replaceSymbols } from '../../utils/util'
+import { CustomElement } from '../../../../custom-types'
 
 async function check(
   menuKey: string,
@@ -66,9 +67,9 @@ export async function insertImageNode(
   if (editor.selection === null) editor.restoreSelection()
 
   // 如果当前正好选中了图片，则 move 一下（如：连续上传多张图片时）
-  if (DomEditor.getSelectedNodeByType(editor, 'image')) {
-    editor.move(1)
-  }
+  // if (DomEditor.getSelectedNodeByType(editor, 'image')) {
+  //   editor.move(1)
+  // }
 
   if (isInsertImageMenuDisabled(editor)) return
 
@@ -135,7 +136,7 @@ export function isInsertImageMenuDisabled(editor: IDomEditor): boolean {
       if (type === 'list-item') return true // list
       if (type.startsWith('header')) return true // 标题
       if (type === 'blockquote') return true // 引用
-      if (Editor.isVoid(editor, n)) return true // void
+      if (Editor.isVoid(editor, n as CustomElement)) return true // void
 
       return false
     },
