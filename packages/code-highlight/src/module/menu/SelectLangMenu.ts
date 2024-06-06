@@ -9,15 +9,15 @@ import { JS_SVG } from '../../constants/svg'
 import { CodeElement } from '../../custom-types'
 
 class SelectLangMenu implements ISelectMenu {
-  readonly title = t('highLightModule.selectLang')
-  readonly iconSvg = JS_SVG
   readonly tag = 'select'
   readonly width = 95
   readonly selectPanelWidth = 115
+  title = t('highLightModule.selectLang')
+  iconSvg = JS_SVG
 
   getOptions(editor: IDomEditor): IOption[] {
     const options: IOption[] = []
-
+    this.iconSvg = editor.getMenuConfig('codeSelectLang').iconSvg
     // 获取配置，参考 './config.ts'
     const { codeLangs = [] } = editor.getMenuConfig('codeSelectLang') // 第二个参数 menu key
 
