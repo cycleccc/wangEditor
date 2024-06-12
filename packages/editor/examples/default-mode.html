@@ -18,20 +18,22 @@
       <button id="btn-toggle-enable">disable/enable</button>
       <button id="btn-destroy">destroy editor</button>
     </p>
-  
+
+
     <!-- 编辑器 -->
     <div>
       <div id="editor-toolbar" class="editor-toolbar"></div>
       <div id="editor-text-area" class="editor-text-area"></div>
     </div>
-  
+
+
     <!-- 内容状态 -->
     <p style="background-color: #f1f1f1;">
       当前文字数量：<span id="total-length"></span>；
       选中文字数量：<span id="selected-length"></span>；
       选中文字："<span id="selected-text"></span>"
     </p>
-  
+
     <!-- 显示内容 -->
     <div id="editor-content-view" class="editor-content-view"></div>
   </div>
@@ -41,7 +43,23 @@
   <script>
     const E = window.wangEditor
 
-    const editorConfig = { MENU_CONF: {} }
+    const editorConfig = {
+      MENU_CONF: {
+        ['fontSize']: {
+          fontSizeList: [
+            // 元素支持两种形式
+            //   1. 字符串；
+            //   2. { name: 'xxx', value: 'xxx' }
+
+            '12px',
+            '16px',
+            {name: '24px', value: '24px'},
+            '40px',
+          ]
+        }
+      }
+    }
+
     // editorConfig.autoFocus = false
     // editorConfig.readOnly = true
     // editorConfig.scroll = false
@@ -94,14 +112,19 @@
     const toolbarConfig = {
       // excludeKeys: ['uploadVideo'],
     }
-
+    const jsonContent = [
+      {type: 'list-item', children: [{text: 'hello'}], level: 2},
+    ]
     // create
     let editor, toolbar
     document.getElementById('btn-create').addEventListener('click', () => {
       editor = E.createEditor({
         selector: '#editor-text-area',
         // selector: document.getElementById('editor-text-area'),
-        content: window.content1,
+        // // content: window.content1,
+        html: `<p><img src="https://www.wangeditor.com/imgs/logo.png" alt="" data-href="" style="width: 30%;"/></p><p><br></p><div data-w-e-type="video" data-w-e-is-void>
+<video poster="test" controls="true" width="auto" height="auto"><source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4"/></video>
+</div><p><br></p>`,
         config: editorConfig
       })
 
